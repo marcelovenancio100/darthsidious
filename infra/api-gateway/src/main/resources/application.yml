@@ -1,0 +1,48 @@
+spring:
+  sleuth:
+    sampler:
+      probability: 1.0
+  application:
+    name: api-gateway
+
+zuul:
+  retryable: true
+  sensitive-headers:
+#  routes:
+#    cars:
+#      serviceId: cars
+#    trip:
+#      serviceId: trip
+#    users:
+#      serviceId: users
+
+cars:
+  ribbon:
+    MaxAutoRetries: 3
+    MaxAutoRetriesNextServer: 3
+    OkToRetryOnAllOperations: true
+
+logging:
+  level:
+#    org.springframework.cloud.netflix: debug
+#    org.springframework.web.filter.CommonsRequestLoggingFilter: debug
+    org.springframework.security: debug
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/,http://localhost:8763/eureka/
+    fetch-registry: true
+    register-with-eureka: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+security:
+  oauth2:
+    authorization:
+      jwt:
+        key-store-password: supersecretpass
+        key-store: near-taxi.jks
+        key-alias: authorization-server
